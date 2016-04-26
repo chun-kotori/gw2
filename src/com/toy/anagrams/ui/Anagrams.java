@@ -32,9 +32,15 @@
 package com.toy.anagrams.ui;
 
 import com.toy.anagrams.lib.WordLibrary;
+import com.toy.anagrams.lib.StaticWordLibrary;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -211,8 +217,22 @@ public class Anagrams extends JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         mainPanel.add(levelLabel, gridBagConstraints);
-
+        
+        
+        
         selectLevel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Level 1", "Level 2", "Level 3" }));
+        //System.out.println(selectLevel.getClass());
+        selectLevel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	StaticWordLibrary swl=new StaticWordLibrary();
+            	String level=(String)selectLevel.getSelectedItem();
+            	//System.out.println(level);
+            	//System.out.println(wordIdx);
+            	scrambledWord.setText(swl.shuffleWord(wordIdx,level));
+        		
+            }
+        });
+        //selectLevel.addItemListener((ItemListener) selectLevel);//追加
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -301,5 +321,6 @@ public class Anagrams extends JFrame {
     private javax.swing.JTextField scrambledWord;
     private javax.swing.JComboBox selectLevel;
     // End of variables declaration//GEN-END:variables
+    
 
 }
