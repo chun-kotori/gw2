@@ -37,7 +37,7 @@ import java.util.Collections;
 /**
  * Implementation of the logic for the Anagram Game application.
  */
-final class StaticWordLibrary extends WordLibrary {
+public final class StaticWordLibrary extends WordLibrary {
 
     private static final String[] WORD_LIST = {
         "abstraction",
@@ -94,10 +94,10 @@ final class StaticWordLibrary extends WordLibrary {
     /**
      * Singleton class.
      */
-    private StaticWordLibrary() {
+    public StaticWordLibrary() {
     	int idx=getSize();
   	  	for(int i=0;i<idx;i++){
-  		  shuffleWord(i);
+  	  	SCRAMBLED_WORD_LIST  [i]=shuffleWord(i,"Level 1");
   	  }
     }
 
@@ -137,19 +137,46 @@ final class StaticWordLibrary extends WordLibrary {
         return userGuess.equals(getWord(idx));
     }
     
-    public void shuffleWord(int idx){	
+    public void level1(ArrayList list){
+    	//System.out.println("-----1メソッド");
+    	Collections.reverse(list);
+    	//System.out.println(list);
+    }
+    public void level2(ArrayList list,int n){
+    	//System.out.println("-----2メソッド");
+    	//System.out.println(list+"前");
+    	Collections.swap(list, 2, n-2);	
+    	//System.out.println(list+"後");
+    }
+    public void level3(ArrayList list){	
+    	//System.out.println("-----3メソッド");
+    	Collections.shuffle(list);
+    }
+
+    public String shuffleWord(int idx,String level){
+    	//System.out.println("--------shuffleword--------");
     	ArrayList list=new ArrayList<String>();
     	String s=getWord(idx);
     	int n=s.length();
     	for(int i=0;i<n;i++){
     	 list.add(s.charAt(i));	
     	}
-    	Collections.shuffle(list);
+    	if(level=="Level 1"){
+    		//System.out.println(list);
+			level1(list);
+			//System.out.println("level1------");
+		}else if(level=="Level 2"){
+			//System.out.println(list);
+			level2(list,n);			
+			//System.out.println("level2------");
+		}else if(level=="Level 3"){
+			//System.out.println(list);
+			level3(list);
+		}
     	String word="";
     	for(int i=0;i<list.size();i++){
     		word+=list.get(i);
     	}
-    	SCRAMBLED_WORD_LIST[idx]=word;
+    	return word;
     }
-
 }
